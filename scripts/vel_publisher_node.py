@@ -48,10 +48,6 @@ if __name__ == '__main__':
 	# run this control loop regularly
 	
 	while not rospy.is_shutdown():
-		# publish the message
-		cntrl_msg.xd = 8
-		cntrl_msg.kp = 1
-		
 		
 		vel_cmd.linear.x = cntrl_msg.kp * (cntrl_msg.xd - pos_msg.x)
 		
