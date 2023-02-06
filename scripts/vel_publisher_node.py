@@ -18,13 +18,13 @@ cntrl_msg = Turtlecontrol()
 
 def pose_callback(data):
 	global pos_msg
-	# convert x and y to cm
+	#Variables for Turtles current position
 	pos_msg.x = data.x
 
 	
 def control_from_user(data):
 	global cntrl_msg
-	# convert x and y to cm
+	#Variables for des
 	cntrl_msg.xd = data.xd
 	cntrl_msg.kp = data.kp
 	
@@ -34,8 +34,10 @@ if __name__ == '__main__':
 	# initialize the node
 	rospy.init_node('vel_publisher_node', anonymous = True)
 	
+	#For position
 	rospy.Subscriber('/turtle1/pose', Pose, pose_callback)
 	
+	#For moving to destination
 	rospy.Subscriber('/turtle1/control_params', Turtlecontrol, control_from_user)
 	
 	# declare a publisher to publish in the velocity command topic
@@ -48,6 +50,7 @@ if __name__ == '__main__':
 	# run this control loop regularly
 	
 	while not rospy.is_shutdown():
+	#Algo implementation
 		
 		vel_cmd.linear.x = cntrl_msg.kp * (cntrl_msg.xd - pos_msg.x)
 		
